@@ -13,3 +13,8 @@ GET http://localhost:8080/api/rank/AllQuestion?page=1
 
 ###
 GET http://localhost:8080/api/robot/talk?content=你好
+###
+
+GET  http://ucas-sunflower.design:8000/chatbot_astro_question?mid=0000&msg=月球
+###
+POST http://comdo.hanlp.com/hanlp/v1/ner/chineseName

@@ -1,5 +1,6 @@
 package com.jishe.jupyter.controller;
 
+import com.jishe.jupyter.entity.Questions;
 import com.jishe.jupyter.service.QuestionService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -50,7 +51,7 @@ public class QusetionController {
     }
 
     @GetMapping("/ModuleExercises")
-    public Map ModuleExercises(String token) {
+    public Map ModuleExercises(String token) throws Exception {
         //此处已经实现模块练习模块搜索
         try {
             ModuleExercises.increment();
@@ -63,7 +64,7 @@ public class QusetionController {
     //此处实现模块练习试题搜索，基于页码和模块编号
     @GetMapping("/ModuleExercisesDetails")
     public Map ModuleExercisesDetails(String token, int module, @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                      @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                                      @RequestParam(value = "size", defaultValue = "10") Integer size) throws Exception {
         try {
             ModuleExercisesDetails.increment();
         } catch (Exception e) {
@@ -74,7 +75,7 @@ public class QusetionController {
     }
     @GetMapping("/FindAlllQ")
     public Map  FindAlllQ(String token, @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                      @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                                      @RequestParam(value = "size", defaultValue = "10") Integer size) throws Exception {
 
         PageRequest request = PageRequest.of(page - 1, size);
         return Map.of("Details", QuestionService.FindAlllQ(token,  request));
@@ -84,7 +85,7 @@ public class QusetionController {
 
 
     @GetMapping("/GetQuestion")
-    public Map GetQuestion(String token, int id) {
+    public Map GetQuestion(String token, int id) throws Exception {
         //此处已经实现指定题目搜索
         try {
             GetQuestion.increment();
@@ -98,7 +99,7 @@ public class QusetionController {
 
 
     @GetMapping("/RandomGetQuestion")
-    public Map RandomGetQuestion(String token) {
+    public Map RandomGetQuestion(String token) throws Exception {
         //此处已经实现随机获得试题
         try {
             RandomGetQuestion.increment();
@@ -109,18 +110,19 @@ public class QusetionController {
         if (id == 0) {
             return Map.of("Question_Result", "null");
         } else {
-            return Map.of("Question_Result", QuestionService.GetQuestion(token, id));
+            Map<String, Questions> question_result = Map.of("Question_Result", QuestionService.GetQuestion(token, id));
+            return question_result;
         }
 
     }
     @GetMapping("/QuestionCount")
-    public Map QuestionCount(String token) {
+    public Map QuestionCount(String token)throws Exception {
         //此处已经实现随机获得试题
      return Map.of("COUNT",QuestionService.GetQuestionCount(token));
 
     }
     @GetMapping("/RecommendedExercises")
-    public Map RecommendedExercises(String token,String openid,int id) {
+    public Map RecommendedExercises(String token,String openid,int id) throws Exception{
         //此处实现随机推荐练习模块
         try {
             RecommendedExercises.increment();
@@ -132,7 +134,7 @@ public class QusetionController {
 
     @GetMapping("/Search")
     public Map Find(String token, String word, @RequestParam(value = "page", defaultValue = "1") Integer page,
-                    @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                    @RequestParam(value = "size", defaultValue = "10") Integer size)throws Exception {
         //此处已经实现试题搜索模块
         try {
             Search.increment();
@@ -144,7 +146,7 @@ public class QusetionController {
     }
 
     @GetMapping("/PutRecords")
-    public Map PutRecords(String token, int id, String source, String answer, String openid) {
+    public Map PutRecords(String token, int id, String source, String answer, String openid)throws Exception {
         //此处实现推送练习记录模块
         try {
             PutRecords.increment();
@@ -155,7 +157,7 @@ public class QusetionController {
     }
     @GetMapping("/PutallRecord")
     public Map PutallRecord(String token, @RequestParam(value = "page", defaultValue = "1") Integer page,
-                            @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                            @RequestParam(value = "size", defaultValue = "10") Integer size) throws Exception{
         //此处实现推送练习记录模块
 
             PutRecords.increment();

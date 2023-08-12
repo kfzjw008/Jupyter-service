@@ -4,7 +4,13 @@ import com.jishe.jupyter.repository.StarssRepoistory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import  com.jishe.jupyter.repository.StarssRepoistory;
+import com.jishe.jupyter.repository.StarssRepoistory;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @program: jupyter
  * @description: 全局变量的直接配置与设置
@@ -22,5 +28,16 @@ public class global {
     3、分享积分：分享一次+8，每日上限3次。name=分享积分
     * */
     public int Expiration_time = 36000000;//过期时间，设置为10个小时
-    public static  StarssRepoistory StarssRepoistory=new StarssRepoistory();//elastic Search链接
+    public static StarssRepoistory StarssRepoistory = new StarssRepoistory();//elastic Search链接
+    public static List<String> wordList;
+
+    static {
+        try {
+            BufferedReader bf = new BufferedReader(new FileReader(new File("keys_baike.txt")));
+            wordList = bf.lines().collect(Collectors.toList());
+        } catch (FileNotFoundException e) {
+            wordList = new ArrayList<>();
+            //e.printStackTrace();
+        }
+    }
 }

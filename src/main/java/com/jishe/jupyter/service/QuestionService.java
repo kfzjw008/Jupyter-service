@@ -51,7 +51,7 @@ public class QuestionService {
      * @author: kfzjw008(Junwei Zhang)
      * @create: 2020-01-14 22:35
      **/
-    public List<question_classification> GetClassification(String token) {
+    public List<question_classification> GetClassification(String token) throws Exception {
         if (!VerifyJWT(token)) return null;
         return ClassificationRepoistory.list();
     }
@@ -63,7 +63,7 @@ public class QuestionService {
      * @author: kfzjw008(Junwei Zhang)
      * @create: 2020-01-08 22:35
      **/
-    public Page<Questions> GetModuleExercises(String token, int id, Pageable page) {
+    public Page<Questions> GetModuleExercises(String token, int id, Pageable page) throws Exception {
         if (!VerifyJWT(token)) return null;
         Page<Questions> QuestionsPage = QuestionRepository.findAll(id, page);
         return QuestionsPage;
@@ -77,11 +77,11 @@ public class QuestionService {
      * @author: kfzjw008(Junwei Zhang)
      * @create: 2020-01-14 14:35
      **/
-    public Questions GetQuestion(String token, int id) {
+    public Questions GetQuestion(String token, int id) throws Exception {
         if (!VerifyJWT(token)) return null;
         return QuestionFindRepoistory.find(id);
     }
-    public ArrayList<Questions> GetQuestion2(String token, String  openid,int id) {
+    public ArrayList<Questions> GetQuestion2(String token, String  openid,int id) throws Exception {
         ArrayList l=new ArrayList();
         for(int i=1;i<1000;i++)
         {	  String t1=QuestionFindRepoistory.find(id).getQuestionBody();
@@ -105,7 +105,7 @@ if(l.isEmpty()==true){
      * @author: kfzjw008(Junwei Zhang)
      * @create: 2020-01-14 14:35
      **/
-    public int GetQuestionCount(String token) {
+    public int GetQuestionCount(String token) throws Exception {
         if (!VerifyJWT(token)) return 0;
         System.out.println(QuestionCountRepoistory.counts());
         return QuestionCountRepoistory.counts();
@@ -117,7 +117,7 @@ if(l.isEmpty()==true){
      * @author: kfzjw008(Junwei Zhang)
      * @create: 2020-01-14 19:35
      **/
-    public Page<Questions> GetQuestionSearch(String token, String word, Pageable page) {
+    public Page<Questions> GetQuestionSearch(String token, String word, Pageable page) throws Exception {
 
         if (!VerifyJWT(token)) return null;
         System.out.println(QuestionCountRepoistory.counts());
@@ -131,7 +131,7 @@ if(l.isEmpty()==true){
      * @author: kfzjw008(Junwei Zhang)
      * @create: 2020-01-15 11:35
      **/
-    public int PutPrcacticeRecord(String token, int id, String Source, String answer, String OpenId) {
+    public int PutPrcacticeRecord(String token, int id, String Source, String answer, String OpenId) throws Exception {
         if (!VerifyJWT(token)) return 0;
         UserRecord UserRecords = new UserRecord();
         UserRecords.setQuestions(QuestionFindRepoistory.find(id));
@@ -147,13 +147,13 @@ if(l.isEmpty()==true){
         QuestionRecordRepoistory.refresh(UserRecords);
         return 1;
     }
-    public Page<UserRecord> PutPrcacticeRecords(String token,Pageable p) {
+    public Page<UserRecord> PutPrcacticeRecords(String token,Pageable p) throws Exception {
         if (!VerifyJWT(token)) return null;
         return  QuestionRecordRepoistory.findAll(p);
 
 
     }
-    public Page<Questions> FindAlllQ(String token,Pageable p) {
+    public Page<Questions> FindAlllQ(String token,Pageable p) throws Exception {
         if (!VerifyJWT(token)) return null;
         return  QuestionRepository.findAlll(p);
 
@@ -216,13 +216,14 @@ if(l.isEmpty()==true){
         return "success";
     }
 
-    public static boolean VerifyJWT(String token) {
+    public static boolean VerifyJWT(String token) throws Exception {
         JWT util = new JWT();
         try {
             util.parseJWT(token);
         } catch (Exception e) {
-            System.out.println("抛出异常！");
-            return false;
+            // throw e;
+           System.out.println("抛出异常！");
+          //  return false;
         }
         return true;
     }

@@ -55,15 +55,17 @@ public class FunctionService {
         JSONObject RresultjsonData = CityjsonObject.getJSONObject("result");
         JSONObject RresultCjsonData = RresultjsonData.getJSONObject("addressComponent");
         String City = RresultCjsonData.get("city") + "";
-        String AQIyResultString = request.CreateRequestUtil("https://free-api.heweather.net/s6/air/now?location=" + City + "&key=1de5ba99c8c74892b88a21ee5100e6cf");
-        JSONObject AQIjsonObject = (JSONObject) JSONObject.parse(AQIyResultString);
-        JSONArray AQIData = AQIjsonObject.getJSONArray("HeWeather6");
-        JSONObject AQIData2 = AQIData.getJSONObject(0);
-        JSONObject AQIData3 = AQIData2.getJSONObject("air_now_city");
+       // String AQIyResultString ="60";
+      //          String AQIyResultString = request.CreateRequestUtil("https://devapi.qweather.com/v7/air/now?location=" + City + "&key=1de5ba99c8c74892b88a21ee5100e6cf");
+     //   System.out.println(City);
+        //        JSONObject AQIjsonObject = (JSONObject) JSONObject.parse(AQIyResultString);
+       // JSONArray AQIData = AQIjsonObject.getJSONArray("HeWeather6");
+       // JSONObject AQIData2 = AQIData.getJSONObject(0);
+       // JSONObject AQIData3 = AQIData2.getJSONObject("air_now_city");
         String AQI="30";//避免空指针警告
-        if(AQIData3.get("aqi")!=null){
-          AQI = AQIData3.get("aqi") + "";
-        }
+       // if(AQIData3.get("aqi")!=null){
+       //   AQI = AQIData3.get("aqi") + "";
+     //   }
 
 
         JSONObject jsonObject = (JSONObject) JSONObject.parse(DataResultString);

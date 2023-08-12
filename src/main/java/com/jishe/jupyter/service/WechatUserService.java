@@ -177,7 +177,7 @@ public class WechatUserService {
 
 
     //添加积分模块
-    public String AddIntergal(int count, String name, String token, String openid) {
+    public String AddIntergal(int count, String name, String token, String openid) throws Exception {
         if (!VerifyJWT(token)) return "Failed";
         if (verityJF(name, count, openid)) {
             WechatUser user = userfindRepository.find(openid);
@@ -195,7 +195,7 @@ public class WechatUserService {
     }
 
     //返回用户积分模块
-    public Map UserIntergal(String token, String openid) {
+    public Map UserIntergal(String token, String openid) throws Exception {
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDateTime minTime = localDateTime.with(LocalTime.MIN);
         LocalDateTime maxTime = localDateTime.with(LocalTime.MAX);
@@ -251,7 +251,7 @@ public class WechatUserService {
         return ALL;
     }
 
-    public static boolean VerifyJWT(String token) {
+    public static boolean VerifyJWT(String token) throws Exception{
         return QuestionService.VerifyJWT(token);
     }
 
